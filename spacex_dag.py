@@ -23,7 +23,7 @@ for rocket in rockets:
         task_id="get_data", 
     #    bash_command="python3 /root/airflow/dags/spacex/load_launches.py -y {{ execution_date.year }} -o /var/data", 
         bash_command="python3 /root/airflow/dags/spacex/load_launches.py -y {{ execution_date.year }} -o /var/data -r {{ params.rocket }}",
-        params={"rocket": "rocket"}, # falcon1/falcon9/falconheavy
+        params={"rocket": rocket}, # falcon1/falcon9/falconheavy
         dag=dag
     )
 
@@ -31,7 +31,7 @@ for rocket in rockets:
         task_id="print_data", 
     #    bash_command="cat /var/data/year={{ execution_date.year }}/rocket={{ params.rocket }}/data.csv", 
         bash_command="cat /var/data/year={{ execution_date.year }}/rocket={{ params.rocket }}/data.csv",
-        params={"rocket": "rocket"}, # falcon1/falcon9/falconheavy
+        params={"rocket": rocket}, # falcon1/falcon9/falconheavy
         dag=dag
     )
 
