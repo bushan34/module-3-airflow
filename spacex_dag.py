@@ -21,7 +21,7 @@ for rocket in rockets:
 
     t1 = BashOperator(
         task_id="get_data_" + rocket, 
-        bash_command="python3 /root/airflow/dags/spacex/load_launches.py -y {{ execution_date.year }} -o /var/data" + ('' if rocket == 'all' else "-r {{ params.rocket }}"),
+        bash_command="python3 /root/airflow/dags/spacex/load_launches.py -y {{ execution_date.year }} -o /var/data" + ('' if rocket == 'all' else " -r {{ params.rocket }}"),
         params={"rocket": rocket}, 
         dag=dag
     )
