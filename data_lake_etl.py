@@ -30,7 +30,7 @@ for table in tables:
 	elif table == 'issue':
 		query = """
 			insert overwrite table nnaranov.ods_issue partition (year='{{ execution_date.year }}') 
-			select cast(user_id as INT), cast(start_time as DATETIME), cast(end_time as DATETIME), title, description, service
+			select cast(user_id as INT), cast(start_time as TIMESTAMP), cast(end_time as TIMESTAMP), title, description, service
 				from nnaranov.stg_issue where year(start_time) = {{ execution_date.year }};
 			"""
 	elif table == 'payment':
