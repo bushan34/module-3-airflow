@@ -45,7 +45,7 @@ for table in tables:
             select user_id, cast(from_unixtime(traffic_timestamp div 1000) as TIMESTAMP), device_id, device_ip_addr, bytes_sent, bytes_received
             from nnaranov.stg_traffic where year(from_unixtime(traffic_timestamp div 1000)) = {{ execution_date.year }};
             """
-    ods.append(DataProcHiveOperator(
+    ods = DataProcHiveOperator(
         task_id='ods_' + table,
         dag=dag,
         query=query,
@@ -53,7 +53,7 @@ for table in tables:
         job_name=USERNAME + '_ods_' + table + '_{{ execution_date.year }}_{{ params.job_suffix }}',
         params={"job_suffix": randint(0, 100000)},
         region='europe-west3',
-    ))
+    )
     if table == 'traffic':
         dm = DataProcHiveOperator(
             task_id='dm_traffic',
