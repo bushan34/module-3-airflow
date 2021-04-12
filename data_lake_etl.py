@@ -42,8 +42,8 @@ for table in tables:
     elif table == 'traffic':
         query = """
             insert overwrite table nnaranov.ods_traffic partition (year='{{ execution_date.year }}') 
-            select user_id, cast(traffic_timestamp as TIMESTAMP), device_id, device_ip_addr, bytes_sent, bytes_received
-            from nnaranov.stg_traffic where year(traffic_timestamp as TIMESTAMP) = {{ execution_date.year }};
+            select user_id, cast(from_unixtime('timestamp' div 1000) as TIMESTAMP), device_id, device_ip_addr, bytes_sent, bytes_received
+            from nnaranov.stg_traffic where year(from_unixtime('timestamp' div 1000)) = {{ execution_date.year }};
             """
     ods = DataProcHiveOperator(
         task_id='ods_' + table,
