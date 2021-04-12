@@ -55,17 +55,18 @@ for table in tables:
         region='europe-west3',
     ))
 
-dm = DataProcHiveOperator(
-    task_id='dm_traffic',
-    dag=dag,
-    query="""
-        insert overwrite table nnaranov.dm_traffic partition (year='{{ execution_date.year }}')  
-        select user_id, max(bytes_received), min(bytes_received), avg(bytes_received)
-        from nnaranov.ods_traffic where year = {{ execution_date.year }} group by user_id;   
-        """,
-    cluster_name='cluster-dataproc',
-    job_name=USERNAME + '_dm_traffic_{{ execution_date.year }}_{{ params.job_suffix }}',
-    params={"job_suffix": randint(0, 100000)},
-    region='europe-west3',
-)
-ods >> dm
+if table == 'traffic':
+    dm = DataProcHiveOperator(
+        task_id='dm_traffic',
+        dag=dag,
+        query="""
+            insert overwrite table nnaranov.dm_traffic partition (year='{{ execution_date.year }}')  
+            select user_id, max(bytes_received), min(bytes_received), avg(bytes_received)
+            from nnaranov.ods_traffic where year = {{ execution_date.year }} group by user_id;   
+            """,
+        cluster_name='cluster-dataproc',
+        job_name=USERNAME + '_dm_traffic_{{ execution_date.year }}_{{ params.job_suffix }}',
+        params={"job_suffix": randint(0, 100000)},
+        region='europe-west3',
+    )
+    ods >> dm
