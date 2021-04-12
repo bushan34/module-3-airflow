@@ -68,5 +68,4 @@ for table in tables:
 		    params={"job_suffix": randint(0, 100000)},
 		    region='europe-west3',
 		)
-
 		ods >> dm
