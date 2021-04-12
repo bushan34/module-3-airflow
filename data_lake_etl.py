@@ -54,7 +54,7 @@ for table in tables:
                 params={"job_suffix": randint(0, 100000)},
 		region='europe-west3',
 	))
-	if table == 'traffic':
+	elif table == 'traffic':
 		dm = DataProcHiveOperator(
 		    task_id='dm_traffic',
 		    dag=dag,
