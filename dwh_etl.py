@@ -391,7 +391,7 @@ for phase in ('HUBS', 'LINKS', 'SATELLITES'):
     # Load LINKs
     elif phase == 'LINKS':
         links = get_phase_context(phase)
-        #all_links_loaded = DummyOperator(task_id="all_links_loaded", dag=dag)
+        all_links_loaded = DummyOperator(task_id="all_links_loaded", dag=dag)
 
     # Load SATELLITEs
     elif phase == 'SATELLITES':
@@ -402,4 +402,4 @@ drop_view_payment_one_year = PostgresOperator(
     dag=dag,
     sql=SQL_CONTEXT['DROP_VIEW_PAYMENT_ONE_YEAR']
 )
-view_payment_one_year >> hubs >> all_hubs_loaded >> links >> satellites >> drop_view_payment_one_year
+view_payment_one_year >> hubs >> all_hubs_loaded >> links >> all_links_loaded >> satellites >> drop_view_payment_one_year
