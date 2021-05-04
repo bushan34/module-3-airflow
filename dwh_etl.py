@@ -8,7 +8,7 @@ from airflow.operators.dummy_operator import DummyOperator
 # SQL Scripts
 SQL_CONTEXT = {
     'LOAD_VIEW_PAYMENT_ONE_YEAR': """
-          create or replace view nnaranov.view_payment_{{ execution_date.year }} as (
+          create or replace view nnaranov.view_payment_{{execution_date.year}} as (
             with staging as (
               with derived_columns as (
                 select
@@ -27,7 +27,7 @@ SQL_CONTEXT = {
                   pay_doc_num::varchar as PAY_DOC_NUM_KEY,
                   'PAYMENT - DATA LAKE'::varchar as RECORD_SOURCE
                 from nnaranov.ods_payment 
-                where cast(extract('year' from cast(pay_date as timestamp)) as int) = {{ execution_date.year }}
+                where cast(extract('year' from cast(pay_date as timestamp)) as int) = {{execution_date.year}}
               ),
               hashed_columns as (
                 select
@@ -98,7 +98,7 @@ SQL_CONTEXT = {
             )
             
             select *, 
-                '{{ execution_date }}'::timestamp as LOAD_DATE,
+                '{{execution_date}}'::timestamp as LOAD_DATE,
                 pay_date as EFFECTIVE_FROM
             from staging
           );
@@ -112,7 +112,7 @@ SQL_CONTEXT = {
                                         partition by USER_PK
                                         order by LOAD_DATE ASC
                                     ) as row_num
-                                 from nnaranov.view_payment_{{ execution_date.year }}         
+                                 from nnaranov.view_payment_{{execution_date.year}}         
                          ) as h where row_num = 1
                     ),  
                     records_to_insert as (
@@ -136,7 +136,7 @@ SQL_CONTEXT = {
                                         partition by ACCOUNT_PK
                                         order by LOAD_DATE ASC
                                     ) as row_num
-                                 from nnaranov.view_payment_{{ execution_date.year }}         
+                                 from nnaranov.view_payment_{{execution_date.year}}         
                          ) as h where row_num = 1
                     ),  
                     records_to_insert as (
@@ -160,7 +160,7 @@ SQL_CONTEXT = {
                               partition by BILLING_PERIOD_PK
                               order by LOAD_DATE ASC
                             ) as row_num
-                          from nnaranov.view_payment_{{ execution_date.year }}  		
+                          from nnaranov.view_payment_{{execution_date.year}}  		
                         ) as h where row_num = 1
                     ),	
                     records_to_insert as (
@@ -184,7 +184,7 @@ SQL_CONTEXT = {
                             partition by PAY_DOC_PK
                             order by LOAD_DATE ASC
                           ) as row_num
-                        from nnaranov.view_payment_{{ execution_date.year }}  		
+                        from nnaranov.view_payment_{{execution_date.year}}  		
                       ) as h where row_num = 1
                     ),	
                   records_to_insert as (
@@ -207,7 +207,7 @@ SQL_CONTEXT = {
                               stg.USER_ACCOUNT_BILLING_PAY_PK, 
                               stg.USER_PK, stg.ACCOUNT_PK, stg.BILLING_PERIOD_PK, stg.PAY_DOC_PK, 
                               stg.LOAD_DATE, stg.RECORD_SOURCE
-                          from nnaranov.view_payment_{{ execution_date.year }} as stg 
+                          from nnaranov.view_payment_{{execution_date.year}} as stg 
                           left join nnaranov.dds_link_user_account_billing_pay as tgt
                           on stg.USER_ACCOUNT_BILLING_PAY_PK = tgt.USER_ACCOUNT_BILLING_PAY_PK
                           where tgt.USER_ACCOUNT_BILLING_PAY_PK is null		
@@ -232,7 +232,7 @@ SQL_CONTEXT = {
                             phone, 
                             EFFECTIVE_FROM, 
                             LOAD_DATE, RECORD_SOURCE
-                        from nnaranov.view_payment_{{ execution_date.year }}
+                        from nnaranov.view_payment_{{execution_date.year}}
                     ),                  
                     update_records as (
                         select 
@@ -289,7 +289,7 @@ SQL_CONTEXT = {
                             pay_date, sum, 
                             EFFECTIVE_FROM, 
                             LOAD_DATE, RECORD_SOURCE
-                        from nnaranov.view_payment_{{ execution_date.year }}                            
+                        from nnaranov.view_payment_{{execution_date.year}}                            
                     ),
                     update_records as (
                         select 
@@ -340,7 +340,7 @@ SQL_CONTEXT = {
                     );                  
             """},
     'DROP_VIEW_PAYMENT_ONE_YEAR': """
-          drop view if exists nnaranov.view_payment_{{ execution_date.year }};
+          drop view if exists nnaranov.view_payment_{{execution_date.year}};
      """
 }
 
@@ -391,7 +391,7 @@ for phase in ('HUBS', 'LINKS', 'SATELLITES'):
     # Load LINKs
     elif phase == 'LINKS':
         links = get_phase_context(phase)
-        all_links_loaded = DummyOperator(task_id="all_links_loaded", dag=dag)
+        #all_links_loaded = DummyOperator(task_id="all_links_loaded", dag=dag)
 
     # Load SATELLITEs
     elif phase == 'SATELLITES':
@@ -402,4 +402,4 @@ drop_view_payment_one_year = PostgresOperator(
     dag=dag,
     sql=SQL_CONTEXT['DROP_VIEW_PAYMENT_ONE_YEAR']
 )
-view_payment_one_year >> hubs >> all_hubs_loaded >> links >> all_links_loaded >> satellites >> drop_view_payment_one_year
+view_payment_one_year >> hubs >> all_hubs_loaded >> links >> satellites >> drop_view_payment_one_year
