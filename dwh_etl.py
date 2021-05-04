@@ -98,7 +98,7 @@ SQL_CONTEXT = {
             )
             
             select *, 
-                '{{execution_date}}'::timestamp as LOAD_DATE,
+                '{{ execution_date }}'::timestamp as LOAD_DATE,
                 pay_date as EFFECTIVE_FROM
             from staging
           );
