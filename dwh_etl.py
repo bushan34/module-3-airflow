@@ -27,7 +27,7 @@ SQL_CONTEXT = {
                   pay_doc_num::varchar as PAY_DOC_NUM_KEY,
                   'payment-DataLake'::varchar as RECORD_SOURCE
                 from nnaranov.ods_payment 
-                where cast(extract('year' from cast(pay_date as timestamp)) as int) = {{ execution_date.year }}
+                where EXTRACT(YEAR FROM pay_date::DATE) = {{ execution_date.year }}
               ),
               hashed_columns as (
                 select
