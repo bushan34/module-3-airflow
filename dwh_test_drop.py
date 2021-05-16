@@ -1,6 +1,6 @@
 #DROP VIEW nnaranov.view_payment_2013;
 #DROP VIEW nnaranov.view_payment_2014
-/*
+'''
 SQL_CONTEXT = {
     'DROP_VIEW_PAYMENT': """
           drop view if exists nnaranov.view_payment_{{ execution_date.year }};
@@ -31,4 +31,4 @@ drop_view_payment = PostgresOperator(
     task_id='DROP_VIEW_PAYMENT',
     dag=dag,
     sql=SQL_CONTEXT['DROP_VIEW_PAYMENT']
-*/
+'''
