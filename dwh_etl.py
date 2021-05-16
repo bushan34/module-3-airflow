@@ -25,7 +25,7 @@ SQL_CONTEXT = {
                   billing_period::varchar as BILLING_PERIOD_KEY,
                   pay_doc_type::varchar as PAY_DOC_TYPE_KEY,
                   pay_doc_num::varchar as PAY_DOC_NUM_KEY,
-                  'PAYMENT - DATA LAKE'::varchar as RECORD_SOURCE
+                  'payment-DataLake'::varchar as RECORD_SOURCE
                 from nnaranov.ods_payment 
                 where cast(extract('year' from cast(pay_date as timestamp)) as int) = {{ execution_date.year }}
               ),
