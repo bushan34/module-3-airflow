@@ -1,5 +1,8 @@
 <p>
-Проверены таблицы слоя ODS: <strong>ods_billing, ods_issue, ods_payment, ods_traffic.</strong><br>
+--Папка great_expectations - весь проект<br>
+--Файл data_docs.zip - архив со сгенерированной документацией<br>
+<br>
+  Проверены таблицы слоя ODS: <strong>ods_billing, ods_issue, ods_payment, ods_traffic.</strong><br>
 По всем таблицам проведена проверка на пустые значения(Null), кол-во строк, кол-во и имя столбцов.<br>
 Дополнительно проведены проверки в таблице:<br>
   <strong>ods_billing</strong><br>
