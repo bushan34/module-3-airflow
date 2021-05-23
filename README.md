@@ -14,3 +14,6 @@
 <strong>Homework_5</strong>-DQtests<br>
 --Папка dq<br>
 </p>
+<strong>Homework_6</strong>-PowerBI<br>
+--Папка mdm<br>
+</p>
