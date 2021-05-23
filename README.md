@@ -1,6 +1,7 @@
 <p>
 <strong>Homework_2</strong>-SpaceX<br>
 --Файл spacex_dag.py<br>
+--Файл git_sync.py<br>  
 --Папка spacex<br>
 <br>
 <strong>Homework_3</strong>-DataLake<br>
