@@ -1,2 +1,2 @@
-scripts_mdm.zip - скрипты для построения витрины<br>
-powerbi.zip - скриншот отчета и файл PBIX<br>
+--Файл scripts_mdm.zip - скрипты для построения витрины<br>
+--Файл powerbi.zip - скриншот отчета и файл PBIX<br>
