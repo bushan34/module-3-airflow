@@ -368,9 +368,9 @@ default_args = {
 }
 
 dag = DAG(
-    username + '.pro_dwh_etl',
+    username + '.dwh_project',
     default_args=default_args,
-    description='Data Warehouse ETL tasks project',
+    description='Data Warehouse tasks project',
     schedule_interval="0 0 1 1 *",
     concurrency=1,
     max_active_runs=1,
