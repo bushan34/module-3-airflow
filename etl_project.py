@@ -33,7 +33,7 @@ for table in tables:
             select id, district, registered_at, billing_mode, is_vip
             from mdm.user where year(from_unixtime(registered_at div 1000)) = {{ execution_date.year }};
             """
-    ods = DataProcHiveOperator(
+ods = DataProcHiveOperator(
         task_id='pro_ods_' + table,
         dag=dag,
         query=query,
@@ -42,3 +42,4 @@ for table in tables:
         params={"job_suffix": randint(0, 100000)},
         region='europe-west3',
     )
+ods
