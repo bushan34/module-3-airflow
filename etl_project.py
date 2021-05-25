@@ -21,7 +21,7 @@ dag = DAG(
 tables = ('payment', 'mdm')
 ods = []
 for table in tables:
-    elif table == 'payment':
+    if table == 'payment':
         query = """
             insert overwrite table nnaranov.pro_ods_payment partition (year='{{ execution_date.year }}') 
             select user_id, pay_doc_type, cast(pay_doc_num as INT), account, phone, billing_period, cast(pay_date as DATE), cast(sum as DECIMAL(8,2))
@@ -30,7 +30,7 @@ for table in tables:
     elif table == 'mdm':
         query = """
             insert overwrite table nnaranov.pro_ods_mdm partition (year='{{ execution_date.year }}') 
-            select id, district, cast(from_unixtime(registered_at div 1000) as TIMESTAMP), billing_mode, is_vip
+            select id, district, registered_at, billing_mode, is_vip
             from mdm.user where year(from_unixtime(registered_at div 1000)) = {{ execution_date.year }};
             """
     ods = DataProcHiveOperator(
