@@ -33,7 +33,7 @@ for table in tables:
             select id, district, registered_at, billing_mode, is_vip
             from mdm.user where year(from_unixtime(registered_at div 1000)) = {{ execution_date.year }};
             """
-ods = DataProcHiveOperator(
+    ods = DataProcHiveOperator(
         task_id='pro_ods_' + table,
         dag=dag,
         query=query,
