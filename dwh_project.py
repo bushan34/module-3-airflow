@@ -359,7 +359,7 @@ username = 'nnaranov'
 default_args = {
     'owner': username,
     'depends_on_past': False,
-    'start_date': datetime(2012, 1, 1, 0, 0, 0),
+    'start_date': datetime(2010, 1, 1, 0, 0, 0),
     'email': ['airflow@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
