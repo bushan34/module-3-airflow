@@ -23,12 +23,12 @@ SQL_CONTEXT = {
                 join nnaranov.pro_dds_sat_pay_details pdspd  on pdluabp.USER_ACCOUNT_BILLING_PAY_PK = pdspd.USER_ACCOUNT_BILLING_PAY_PK
                 join nnaranov.pro_dds_hub_user pdhu on pdluabp.USER_PK = pdhu.USER_PK
                 left join nnaranov.pro_ods_mdm pom on pdhu.USER_KEY = pom.ID::text
-                where billing_year = {{ execution_date.year }}			
+                where extract(year from to_date(BILLING_PERIOD_KEY, 'YYYY-MM')) = {{ execution_date.year }}			
               )		
               select billing_year, legal_type, district, billing_mode, registration_year, is_vip, sum(billing_sum)
               from raw_data
-              group by billing_year, legal_type, district, registration_year, is_vip
-              order by billing_year, legal_type, district, registration_year, is_vip
+              group by billing_year, legal_type, district, billing_mode, registration_year, is_vip
+              order by billing_year, legal_type, district, billing_mode, registration_year, is_vip
           ;
     """,
     'DIMENSIONS': {
