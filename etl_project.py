@@ -12,7 +12,7 @@ default_args = {
 }
 
 dag = DAG(
-    USERNAME + '_etl_project',
+    USERNAME + '.etl_project',
     default_args=default_args,
     description='ETL tasks project',
     schedule_interval="0 0 1 1 *",
