@@ -338,64 +338,7 @@ SQL_CONTEXT = {
                             LOAD_DATE, RECORD_SOURCE
                         from records_to_insert
                     );                  
-            """,
-            'SAT_USER_MDM_DETAILS':  """
-					with source_data as (
-						select 
-							USER_PK, USER_HASHDIFF, 
-							legal_type, district, registered_at, billing_mode, is_vip,
-							EFFECTIVE_FROM, 
-							LOAD_DATE, RECORD_SOURCE
-					from nnaranov_view_pro_mdm_{{ execution_date.year }}
-					),
-					update_records as (
-						select 
-							a.USER_PK, a.USER_HASHDIFF, 
-							a.legal_type, a.district, a.registered_at, a.billing_mode,a.is_vip,
-							a.EFFECTIVE_FROM, 
-							a.LOAD_DATE, a.RECORD_SOURCE
-						from nnaranov_pro_dds_sat_mdm_details as a
-						join source_data as b
-						on a.USER_PK = b.USER_PK
-						where  a.LOAD_DATE <= b.LOAD_DATE
-					),
-					latest_records as (
-						select * from (
-							select USER_PK, USER_HASHDIFF, LOAD_DATE,
-							case when rank() over (partition by USER_PK order by LOAD_DATE desc) = 1
-								then 'Y' 
-								else 'N'
-							end as latest
-							from update_records
-						) as s
-						where latest = 'Y'
-					),	
-					records_to_insert as (
-						select distinct 
-							e.USER_PK, e.USER_HASHDIFF, 
-							e.legal_type, e.district, e.registered_at, e.billing_mode, e.is_vip,
-							e.EFFECTIVE_FROM, 
-							e.LOAD_DATE, e.RECORD_SOURCE
-						from source_data as e
-						left join latest_records
-						on latest_records.USER_HASHDIFF = e.USER_HASHDIFF and 
-					    latest_records.USER_PK = e.USER_PK
-						where latest_records.USER_HASHDIFF is NULL
-					)	
-					insert into nnaranov_pro_dds_sat_mdm_details (
-						USER_PK, USER_HASHDIFF, 
-						legal_type, district, registered_at, billing_mode, is_vip,
-						EFFECTIVE_FROM, 
-						LOAD_DATE, RECORD_SOURCE)
-					(
-					select 
-						USER_PK, USER_HASHDIFF, 
-						legal_type, district, registered_at, billing_mode, is_vip,
-						EFFECTIVE_FROM, 
-						LOAD_DATE, RECORD_SOURCE
-					from records_to_insert
-					);
-             """},
+            """},
     'DROP_VIEW_PAYMENT_ONE_YEAR': """
           drop view if exists nnaranov.view_pro_payment_{{ execution_date.year }};
      """
