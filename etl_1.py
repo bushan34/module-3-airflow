@@ -8,10 +8,10 @@ from airflow.operators.postgres_operator import PostgresOperator
 #SQL Scripts
 SQL_CONTEXT = {
 	'PAYMENT': """
-			insert overwrite table nnaranov.pro_ods_payment partition (year='{{ execution_date.year }}') 
-            select user_id, pay_doc_type, cast(pay_doc_num as INT), account, phone, billing_period, cast(pay_date as DATE), cast(sum as DECIMAL(8,2))
-            from nnaranov.stg_payment where year(pay_date) = {{ execution_date.year }};
-			""",
+		insert overwrite table nnaranov.pro_ods_payment partition (year='{{ execution_date.year }}') 
+            	select user_id, pay_doc_type, cast(pay_doc_num as INT), account, phone, billing_period, cast(pay_date as DATE), cast(sum as DECIMAL(8,2))
+           	from nnaranov.stg_payment where year(pay_date) = {{ execution_date.year }};
+		""",
 	'MDM':	"""
             insert overwrite table nnaranov.pro_ods_mdm partition (year='{{ execution_date.year }}') 
             select id, district, registered_at, billing_mode, is_vip
