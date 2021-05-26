@@ -14,11 +14,10 @@ SQL_CONTEXT = {
                       legal_type,
                       district,
                       extract(year from registered_at) as registration_year,
-					  billing_mode,
+		      billing_mode,
                       is_vip,
                       extract(year from to_date(BILLING_PERIOD_KEY, 'YYYY-MM')) as billing_year,
-                      sum as billing_sum
-					  #sum as payment_sum
+                      sum as billing_sum					 
                 from nnaranov.pro_dds_link_user_account_billing_pay pdluabp
                 join nnaranov.pro_dds_hub_billing_period pdhbp on pdluabp.BILLING_PERIOD_PK = pdhbp.BILLING_PERIOD_PK
                 join nnaranov.pro_dds_sat_pay_details pdspd  on pdluabp.USER_ACCOUNT_BILLING_PAY_PK = pdspd.USER_ACCOUNT_BILLING_PAY_PK
@@ -67,7 +66,7 @@ SQL_CONTEXT = {
                                 billing_year_id,
                                 legal_type_id,
                                 district_id,
-								billing_mode,
+				billing_mode,
                                 registration_year_id,
                                 is_vip,
                                 sum 
