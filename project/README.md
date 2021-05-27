@@ -2,7 +2,7 @@
 Папки:<br>
   <br>
 <strong>dag</strong> - DAGs Airflow<br>
-<strong>dq</strong> - Качество данных<br>
+<strong>dq</strong> - Качество данных (DQtest)<br>
 <br>
 Файлы:<br>
   <br>
