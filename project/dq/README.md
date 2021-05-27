@@ -1,6 +1,6 @@
 <p>
-<strong>Папка great_expectations</strong> - весь проект<br>
-<strong>Файл data_docs.zip</strong> - архив со сгенерированной документацией<br>
+Папка <strong>great_expectations</strong> - весь проект<br>
+Файл <strong>data_docs.zip</strong> - архив со сгенерированной документацией<br>
 <br>
   Проверена таблица слоя ODS: <strong>pro_ods_payment</strong><br>
 В таблице проведена проверка на пустые значения(Null), кол-во строк, кол-во и имя столбцов.<br>
