@@ -1,4 +1,8 @@
 <p>
+<strong>Выпускной проект DE</strong><br>
+--Папка project<br>
+  <br>
+  <br>
 <strong>Homework_2</strong>-SpaceX<br>
 --Файл spacex_dag.py<br>
 --Файл git_sync.py<br>  
